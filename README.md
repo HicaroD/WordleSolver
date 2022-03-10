@@ -1,2 +1,2 @@
 # WordleSolver
-An algorithm to solve Wordle puzzles.
+:green_square: An algorithm to solve Wordle puzzles.
