@@ -1,9 +1,9 @@
 # WordleSolver
-:green_square: An algorithm to solve Wordle puzzles.
+:green_square: A simple algorithm to solve Wordle puzzles.
 
 ### Explanations
-With the Wordle dictionary on hands, I could write a fairly simple algorithm to filter the entire list of words. I didn't measure,
-but I'm pretty sure this algorithm is very inneficient and there are plenty of better implementations of a Wordle Solver.
+
+With the Wordle dictionary on hands, I could write a fairly simple algorithm to filter the entire list of words. I didn't measure,but I'm pretty sure this algorithm is very inneficient and there are plenty of better implementations of a Wordle Solver. To take a little bit more advantage, try to use some good opening words, such as "crate", "salt", "soare" or "crane".
 
 Maybe in the near future, I could improve my algorithm precision by taking advantage of the common word list and the letter frequency list, so I can show more precise and reliable results.
 
