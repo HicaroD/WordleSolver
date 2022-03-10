@@ -22,7 +22,6 @@ fn get_pairs(word: &str) -> Vec<(&str, &str)> {
     pairs
 }
 
-// TODO(Hícaro): Big and unclear, variable names aren't that good
 fn tokenize_word(word: &str) -> Vec<LetterStatus> {
     let pairs = get_pairs(word);
 
