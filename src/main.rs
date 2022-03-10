@@ -30,7 +30,10 @@ fn tokenize_word(word: &str) -> Vec<LetterStatus> {
             "C" => tokens.push(LetterStatus::Correct(letter, i)),
             "Cl" => tokens.push(LetterStatus::Close(letter)),
             "Nf" => tokens.push(LetterStatus::NotFound(letter)),
-            token => panic!("Invalid token: {token}"), // TODO: Add better error handling
+            token => {
+                eprintln!("Unexpected token: {token}");
+                std::process::exit(1);
+            }
         }
     }
 
@@ -57,9 +60,8 @@ fn main() {
 
     let mut i = 5;
     while i != 0 {
-        println!("{}", get_word());
+        let word = get_word();
+        let tokenized_word = tokenize_word(&word);
         i-=1;
     }
-
-    let tokens = tokenize_word(example);
 }
