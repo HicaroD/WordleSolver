@@ -38,14 +38,6 @@ fn tokenize_word(word: &str) -> Vec<LetterStatus> {
     tokens
 }
 
-fn get_word() -> String {
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Expected a string");
-    input
-}
-
 // TODO(Hícaro): Eliminate code repetition
 fn get_matches<'a>(tokens: &'a Vec<LetterStatus>, wordle_words: &'a Vec<&str>) -> Vec<&'a &'a str> {
     let mut filtered_wordle_words: Vec<&&str> = vec![];
@@ -75,6 +67,14 @@ fn get_matches<'a>(tokens: &'a Vec<LetterStatus>, wordle_words: &'a Vec<&str>) -
     }
 
     filtered_wordle_words
+}
+
+fn get_word() -> String {
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Expected a string");
+    input
 }
 
 fn main() {
