@@ -47,4 +47,4 @@ santa
 women
 admin
 Jesus
-and stone
+stone
