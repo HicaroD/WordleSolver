@@ -8,11 +8,6 @@ enum LetterStatus<'a> {
     NotFound(&'a str),
 }
 
-fn get_word_list(file: &String) -> Vec<&str> {
-    let data = file.split('\n').collect();
-    data
-}
-
 // TODO(Hícaro): Big and unclear, variable names aren't that good
 fn tokenize_word(word: &str) -> Vec<LetterStatus> {
     let letters: Vec<&str> = word.split_whitespace().collect();
@@ -91,7 +86,7 @@ fn main() {
         }
     };
 
-    let wordle_words = get_word_list(&file);
+    let wordle_words = file.split('\n').collect();
 
     let mut i = 5;
     while i != 0 {
