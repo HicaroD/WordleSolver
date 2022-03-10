@@ -96,9 +96,11 @@ fn main() {
         let tokenized_word = tokenize_word(&word);
         filter_words_with_matches(&tokenized_word, &mut wordle_words);
 
+        println!("---------------");
         for word in wordle_words.iter() {
-            println!("{word}")
+            println!("{word}");
         }
+        println!("---------------\n");
 
         i -= 1;
     }
