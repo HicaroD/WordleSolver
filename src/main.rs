@@ -78,15 +78,16 @@ fn get_matches<'a>(tokens: &'a Vec<LetterStatus>, wordle_words: &'a Vec<&str>) -
 }
 
 fn main() {
-    let file = match fs::read_to_string("datasets/wordle_word_list.txt") {
+    let wordle_words_file = match fs::read_to_string("datasets/wordle_word_list.txt") {
         Ok(content) => content,
+
         Err(err) => {
             eprintln!("{err}");
             std::process::exit(1);
         }
     };
 
-    let wordle_words = file.split('\n').collect();
+    let wordle_words = wordle_words_file.split('\n').collect();
 
     let mut i = 5;
     while i != 0 {
