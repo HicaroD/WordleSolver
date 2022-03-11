@@ -2,7 +2,7 @@ use std::fs;
 use std::io;
 
 #[derive(Debug)]
-enum LetterStatus<'a> {
+enum Status<'a> {
     Correct(&'a str, usize),
     Close(&'a str),
     NotFound(&'a str),
@@ -22,18 +22,18 @@ fn get_pairs(word: &str) -> Vec<(&str, &str)> {
     pairs
 }
 
-fn tokenize_word(word: &str) -> Vec<LetterStatus> {
+fn tokenize_word(word: &str) -> Vec<Status> {
     let pairs = get_pairs(word);
 
-    let mut tokens: Vec<LetterStatus> = vec![];
+    let mut tokens: Vec<Status> = vec![];
 
     for (position, pair) in pairs.into_iter().enumerate() {
         let (letter, status) = pair;
 
         match status {
-            "C" => tokens.push(LetterStatus::Correct(letter, position)),
-            "Cl" => tokens.push(LetterStatus::Close(letter)),
-            "Nf" => tokens.push(LetterStatus::NotFound(letter)),
+            "C" => tokens.push(Status::Correct(letter, position)),
+            "Cl" => tokens.push(Status::Close(letter)),
+            "Nf" => tokens.push(Status::NotFound(letter)),
             token => {
                 eprintln!("Unexpected token: {token}");
                 std::process::exit(1);
@@ -43,12 +43,12 @@ fn tokenize_word(word: &str) -> Vec<LetterStatus> {
     tokens
 }
 
-fn filter_words_with_matches<'a>(tokens: &'a Vec<LetterStatus>, wordle_words: &'a mut Vec<&str>) {
+fn filter_words_with_matches<'a>(tokens: &'a Vec<Status>, wordle_words: &'a mut Vec<&str>) {
     let mut matches: Vec<&str> = wordle_words.clone();
 
     for token in tokens.into_iter() {
         matches = match token {
-            LetterStatus::Correct(letter, position) => matches
+            Status::Correct(letter, position) => matches
                 .into_iter()
                 .filter(|word| {
                     word.contains(letter)
@@ -56,12 +56,12 @@ fn filter_words_with_matches<'a>(tokens: &'a Vec<LetterStatus>, wordle_words: &'
                 })
                 .collect(),
 
-            LetterStatus::Close(letter) => matches
+            Status::Close(letter) => matches
                 .into_iter()
                 .filter(|word| word.contains(letter))
                 .collect(),
 
-            LetterStatus::NotFound(letter) => matches
+            Status::NotFound(letter) => matches
                 .into_iter()
                 .filter(|word| !word.contains(letter))
                 .collect(),
