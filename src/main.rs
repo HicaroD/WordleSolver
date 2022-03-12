@@ -3,9 +3,9 @@ use std::io;
 
 #[derive(Debug)]
 enum Status<'a> {
-    Correct(&'a str, usize),
-    Close(&'a str),
-    NotFound(&'a str),
+    Green(&'a str, usize),
+    Orange(&'a str),
+    Black(&'a str),
 }
 
 fn get_pairs(word: &str) -> Vec<(&str, &str)> {
@@ -31,9 +31,9 @@ fn tokenize_word(word: &str) -> Vec<Status> {
         let (letter, status) = pair;
 
         match status {
-            "C" => tokens.push(Status::Correct(letter, position)),
-            "Cl" => tokens.push(Status::Close(letter)),
-            "Nf" => tokens.push(Status::NotFound(letter)),
+            "C" => tokens.push(Status::Green(letter, position)),
+            "Cl" => tokens.push(Status::Orange(letter)),
+            "Nf" => tokens.push(Status::Black(letter)),
             token => {
                 eprintln!("Unexpected token: {token}");
                 std::process::exit(1);
@@ -48,7 +48,7 @@ fn filter_words_with_matches<'a>(tokens: &'a Vec<Status>, wordle_words: &'a mut 
 
     for token in tokens.into_iter() {
         matches = match token {
-            Status::Correct(letter, position) => matches
+            Status::Green(letter, position) => matches
                 .into_iter()
                 .filter(|word| {
                     word.contains(letter)
@@ -56,12 +56,12 @@ fn filter_words_with_matches<'a>(tokens: &'a Vec<Status>, wordle_words: &'a mut 
                 })
                 .collect(),
 
-            Status::Close(letter) => matches
+            Status::Orange(letter) => matches
                 .into_iter()
                 .filter(|word| word.contains(letter))
                 .collect(),
 
-            Status::NotFound(letter) => matches
+            Status::Black(letter) => matches
                 .into_iter()
                 .filter(|word| !word.contains(letter))
                 .collect(),
