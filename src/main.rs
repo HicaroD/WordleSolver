@@ -1,5 +1,6 @@
 use std::fs;
 use std::io;
+use std::collections::HashSet;
 
 #[derive(Debug)]
 enum Status<'a> {
@@ -8,32 +9,35 @@ enum Status<'a> {
     Black(&'a str),
 }
 
-fn get_pairs(word: &str) -> Vec<(&str, &str)> {
-    let letters: Vec<&str> = word.split_whitespace().collect();
+fn is_unique_char(letter: &str, word: &str) -> bool {
+    word.matches(letter).count() == 1
+}
 
-    let pairs: Vec<(&str, &str)> = letters
-        .into_iter()
-        .map(|pair| {
-            let current_pair: Vec<&str> = pair.split('-').collect();
-            (current_pair[0], current_pair[1])
-        })
-        .collect();
+fn get_pairs(word: &str) -> HashSet<(&str, &str, i8)> {
+    let letters: Vec<&str> = word.trim().split_whitespace().collect();
+    let mut pairs: HashSet<(&str, &str, i8)> = HashSet::new();
+
+    for (position, letter) in letters.iter().enumerate() {
+        let pair: Vec<&str> = letter.split('-').collect();
+        let (letter, status) = (pair[0], pair[1]);
+
+        if is_unique_char(letter, word) || status != "B" {
+            pairs.insert((letter, status, position as i8));
+        }
+    }
 
     pairs
 }
 
 fn tokenize_word(word: &str) -> Vec<Status> {
     let pairs = get_pairs(word);
-
     let mut tokens: Vec<Status> = vec![];
 
-    for (position, pair) in pairs.into_iter().enumerate() {
-        let (letter, status) = pair;
-
+    for (letter, status, position) in pairs.into_iter() {
         match status {
-            "C" => tokens.push(Status::Green(letter, position)),
-            "Cl" => tokens.push(Status::Orange(letter)),
-            "Nf" => tokens.push(Status::Black(letter)),
+            "G" => tokens.push(Status::Green(letter, position.try_into().unwrap())),
+            "O" => tokens.push(Status::Orange(letter)),
+            "B" => tokens.push(Status::Black(letter)),
             token => {
                 eprintln!("Unexpected token: {token}");
                 std::process::exit(1);
