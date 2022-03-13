@@ -20,7 +20,7 @@
 
 ![pattern](Images/pattern_example.png)
 
-The input of the program should be `c-O r-B a-B t-B e-B`. You need to associate each word with your status / color and try to use to use the outputs of the program for upcoming words. Hopefully, you get good patterns to make the list of words as short as possible.
+The input of the program should be `c-O r-B a-B t-B e-B`. You need to associate each letter with your status / color and try to use to use the outputs of the program as the possible inputs in the game. Hopefully, you get good patterns to make the list of words as short as possible.
 
 ### Explanations
 
