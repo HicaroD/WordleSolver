@@ -3,22 +3,22 @@
 
 ### Installation
 
-    1. Clone the project and go to the folder
+   1. Clone the project and go to the folder
     
-    ```bash
-    git clone https://github.com/HicaroD/WordleSolver && cd WordleSolver
-    ```
+   ```bash
+   git clone https://github.com/HicaroD/WordleSolver && cd WordleSolver
+   ```
     
-    2. Run the project
+   2. Run the project
     
-    ```bash
-    cargo run --release
-    ```
+   ```bash
+   cargo run --release
+   ```
 
 ### Usage
    In order to represent the pattern below in my program, you can use the following keywords: `B`(Black), `G`(Green) and `O`(Orange).
 
-[pattern](Images/pattern_example.png)
+![pattern](Images/pattern_example.png)
 
 The input of the program should be `c-O r-B a-B t-B e-B`. You need to associate each word with your status / color and try to use to use the outputs of the program for upcoming words. Hopefully, you get good patterns to make the list of words as short as possible.
 
