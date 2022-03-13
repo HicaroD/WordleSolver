@@ -94,8 +94,7 @@ fn main() {
 
     let mut wordle_words = wordle_words_file.split('\n').collect();
 
-    let mut i = 5;
-    while i != 0 {
+    for _ in 0..5 {
         let word = get_word();
         let tokenized_word = tokenize_word(&word);
         filter_words_with_matches(&tokenized_word, &mut wordle_words);
@@ -105,7 +104,5 @@ fn main() {
             println!("{word}");
         }
         println!("---------------\n");
-
-        i -= 1;
     }
 }
