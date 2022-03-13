@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "worldle_solver"
+name = "wordle_solver"
 version = "0.1.0"
