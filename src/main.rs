@@ -47,16 +47,16 @@ fn tokenize_word(word: &str) -> Vec<Status> {
     tokens
 }
 
-fn filter_words_with_matches<'a>(tokens: &'a Vec<Status>, wordle_words: &'a mut Vec<&str>) {
+fn filter_words_with_matches<'a>(tokens: &[Status], wordle_words: &'a mut Vec<&str>) {
     let mut matches: Vec<&str> = wordle_words.clone();
 
-    for token in tokens.into_iter() {
+    for token in tokens.iter() {
         matches = match token {
             Status::Green(letter, position) => matches
                 .into_iter()
                 .filter(|word| {
                     word.contains(letter)
-                        && word.chars().nth(*position).unwrap() == letter.chars().nth(0).unwrap()
+                        && word.chars().nth(*position).unwrap() == letter.chars().next().unwrap()
                 })
                 .collect(),
 
