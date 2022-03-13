@@ -29,10 +29,6 @@ The input of the program should be `c-O r-B a-B t-B e-B`. You need to associate 
 
    Maybe in the near future, I could improve my algorithm precision by taking advantage of the list of common word and letter frequency, so I can show more precise and reliable results.
 
-### Emoji
-
-   If your terminal emulator can't display Unicode characters, such as emoji, you can install the font `noto-fonts-emoji` and restart your terminal, now you can see emojis on the screen.
-
 ### License
 
    This project is licensed under the [MIT](./LICENSE) license.
