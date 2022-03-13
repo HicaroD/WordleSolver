@@ -5,15 +5,15 @@
 
    1. Clone the project and go to the folder
     
-   ```bash
-   git clone https://github.com/HicaroD/WordleSolver && cd WordleSolver
-   ```
+      ```bash
+      git clone https://github.com/HicaroD/WordleSolver && cd WordleSolver
+      ```
     
    2. Run the project
     
-   ```bash
-   cargo run --release
-   ```
+      ```bash
+      cargo run --release
+      ```
 
 ### Usage
    In order to represent the pattern below in my program, you can use the following keywords: `B`(Black), `G`(Green) and `O`(Orange).
