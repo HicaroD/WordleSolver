@@ -1,6 +1,13 @@
 [package]
 name = "wordle_solver"
+description = "A fairly simple Wordle solver algorithm"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+authors = ["Hícaro <hdanrlley1@gmail.com>"]
+keywords = ["wordle", "solver", "algorithm", "cli"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+repository = "https://github.com/HicaroD/WordleSolver"
 
 [dependencies]
