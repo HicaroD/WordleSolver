@@ -1,6 +1,6 @@
+use std::collections::HashSet;
 use std::fs;
 use std::io;
-use std::collections::HashSet;
 
 #[derive(Debug)]
 enum Status<'a> {
