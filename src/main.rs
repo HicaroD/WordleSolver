@@ -14,10 +14,8 @@ fn is_unique_char(letter: &str, word: &str) -> bool {
 }
 
 fn get_pairs(word: &str) -> HashSet<(&str, &str, i8)> {
-    let letters: Vec<&str> = word.trim().split_whitespace().collect();
     let mut pairs: HashSet<(&str, &str, i8)> = HashSet::new();
-
-    for (position, letter) in letters.iter().enumerate() {
+    for (position, letter) in word.trim().split_whitespace().enumerate(){
         let pair: Vec<&str> = letter.split('-').collect();
         let (letter, status) = (pair[0], pair[1]);
 
