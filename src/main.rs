@@ -1,6 +1,5 @@
 use std::collections::HashSet;
-use std::fs;
-use std::io;
+use std::{fs, io};
 
 #[derive(Debug)]
 enum Status<'a> {
@@ -13,7 +12,8 @@ fn is_unique_char(letter: &str, word: &str) -> bool {
     word.matches(letter).count() == 1
 }
 
-fn get_pairs(word: &str) -> HashSet<(&str, &str, i8)> {
+// TODO(Hícaro): Add error handling in case of bad inputs from user
+fn parse_letters(word: &str) -> HashSet<(&str, &str, i8)> {
     let mut pairs: HashSet<(&str, &str, i8)> = HashSet::new();
     for (position, letter) in word.trim().split_whitespace().enumerate(){
         let pair: Vec<&str> = letter.split('-').collect();
@@ -23,15 +23,14 @@ fn get_pairs(word: &str) -> HashSet<(&str, &str, i8)> {
             pairs.insert((letter, status, position as i8));
         }
     }
-
     pairs
 }
 
 fn tokenize_word(word: &str) -> Vec<Status> {
-    let pairs = get_pairs(word);
+    let letters = parse_letters(word);
     let mut tokens: Vec<Status> = vec![];
 
-    for (letter, status, position) in pairs.into_iter() {
+    for (letter, status, position) in letters.into_iter() {
         match status {
             "G" => tokens.push(Status::Green(letter, position.try_into().unwrap())),
             "O" => tokens.push(Status::Orange(letter)),
