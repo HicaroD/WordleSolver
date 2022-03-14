@@ -103,3 +103,20 @@ fn main() {
         println!("---------------\n");
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_green_status(){
+        let wordle_words_file = fs::read_to_string("datasets/wordle_word_list.txt").unwrap();
+        let mut wordle_words = wordle_words_file.split('\n').collect();
+        let tokenized_word = tokenize_word("c-G r-O a-B t-O e-O");
+        filter_words_with_matches(&tokenized_word, &mut wordle_words);
+
+        for word in wordle_words.iter(){
+            assert!(word.starts_with("c"));
+        }
+    }
+}
