@@ -1,5 +1,5 @@
 [package]
-name = "wordle_solver"
+name = "wordle_solver_"
 description = "A fairly simple Wordle solver algorithm"
 version = "0.1.0"
 edition = "2021"
