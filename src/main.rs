@@ -23,11 +23,11 @@ fn is_unique_char(letter: &str, word: &str) -> bool {
     word.matches(letter).count() == 1
 }
 
-// TODO(Hícaro): Add error handling in case of bad inputs from user
 fn parse_letters(word: &str) -> Result<HashSet<(&str, &str, i8)>, ParserError> {
     let mut pairs: HashSet<(&str, &str, i8)> = HashSet::new();
     for (position, letter) in word.trim().split_whitespace().enumerate() {
         let pair: Vec<&str> = letter.split('-').collect();
+
         if pair[0].len() > 1 {
             return Err(ParserError(format!("Invalid input: {}", pair[0])));
         }
@@ -133,11 +133,43 @@ mod tests {
     fn test_green_status() {
         let wordle_words_file = fs::read_to_string("datasets/wordle_word_list.txt").unwrap();
         let mut wordle_words = wordle_words_file.split('\n').collect();
-        let tokenized_word = tokenize_word("c-G r-O a-B t-O e-O");
+        let tokenized_word = tokenize_word("c-G r-O a-B t-O e-O").unwrap();
         filter_words_with_matches(&tokenized_word, &mut wordle_words);
 
         for word in wordle_words.iter() {
             assert!(word.starts_with("c"));
         }
+    }
+
+    #[test]
+    fn test_orange_status() {
+        let wordle_words_file = fs::read_to_string("datasets/wordle_word_list.txt").unwrap();
+        let mut wordle_words = wordle_words_file.split('\n').collect();
+        let tokenized_word = tokenize_word("c-G r-O a-B t-B e-O").unwrap();
+        filter_words_with_matches(&tokenized_word, &mut wordle_words);
+
+        for word in wordle_words.iter() {
+            assert!(word.contains("r"));
+            assert!(word.contains("e"))
+        }
+    }
+
+    #[test]
+    fn test_black_status() {
+        let wordle_words_file = fs::read_to_string("datasets/wordle_word_list.txt").unwrap();
+        let mut wordle_words = wordle_words_file.split('\n').collect();
+        let tokenized_word = tokenize_word("c-G r-O a-B t-B e-O").unwrap();
+        filter_words_with_matches(&tokenized_word, &mut wordle_words);
+
+        for word in wordle_words.iter() {
+            assert!(!word.contains("a"));
+            assert!(!word.contains("t"));
+        }
+    }
+
+    #[test]
+    fn test_if_catch_error_when_input_has_more_than_one_letter() {
+        let tokenized_word = tokenize_word("ab-G r-O a-B t-B e-O");
+        assert!(tokenized_word.is_err())
     }
 }
