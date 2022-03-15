@@ -1,5 +1,14 @@
 use std::collections::HashSet;
-use std::{fs, io};
+use std::{fs, io, error::Error, fmt::Display};
+
+#[derive(Debug)]
+struct ParserError(String);
+impl Error for ParserError {}
+impl Display for ParserError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
 
 #[derive(Debug)]
 enum Status<'a> {
@@ -13,21 +22,24 @@ fn is_unique_char(letter: &str, word: &str) -> bool {
 }
 
 // TODO(Hícaro): Add error handling in case of bad inputs from user
-fn parse_letters(word: &str) -> HashSet<(&str, &str, i8)> {
+fn parse_letters(word: &str) -> Result<HashSet<(&str, &str, i8)>, ParserError> {
     let mut pairs: HashSet<(&str, &str, i8)> = HashSet::new();
     for (position, letter) in word.trim().split_whitespace().enumerate(){
         let pair: Vec<&str> = letter.split('-').collect();
-        let (letter, status) = (pair[0], pair[1]);
+        if pair[0].len() > 1 {
+            return Err(ParserError(format!("Invalid input: {}", pair[0])));
+        }
 
+        let (letter, status) = (pair[0], pair[1]);
         if is_unique_char(letter, word) || status != "B" {
             pairs.insert((letter, status, position as i8));
         }
     }
-    pairs
+    Ok(pairs)
 }
 
-fn tokenize_word(word: &str) -> Vec<Status> {
-    let letters = parse_letters(word);
+fn tokenize_word(word: &str) -> Result<Vec<Status>, ParserError> {
+    let letters = parse_letters(word)?;
     let mut tokens: Vec<Status> = vec![];
 
     for (letter, status, position) in letters.into_iter() {
@@ -41,7 +53,7 @@ fn tokenize_word(word: &str) -> Vec<Status> {
             }
         }
     }
-    tokens
+    Ok(tokens)
 }
 
 fn filter_words_with_matches<'a>(tokens: &[Status], wordle_words: &'a mut Vec<&str>) {
@@ -93,7 +105,14 @@ fn main() {
 
     for _ in 0..5 {
         let word = get_word();
-        let tokenized_word = tokenize_word(&word);
+        let tokenized_word = match tokenize_word(&word) {
+            Ok(tokens) => tokens,
+            Err(err) => {
+                eprintln!("{}", err);
+                std::process::exit(1);
+            }
+        };
+
         filter_words_with_matches(&tokenized_word, &mut wordle_words);
 
         println!("---------------");
